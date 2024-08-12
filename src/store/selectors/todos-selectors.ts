@@ -1,3 +1,8 @@
 import { createDraftSafeSelector } from "@reduxjs/toolkit";
 
-export const selectTodos = state => state.todosReducer
+const selectSelf = (state: any) => state.todosReducer
+
+export const selectTodos = createDraftSafeSelector(
+    selectSelf,
+    ({todos}) => todos
+)

@@ -2,7 +2,7 @@ const VERSION = "1.0.1";
 const LOCAL_STORAGE_VERSION_KEY = "VERSION";
 export const LOCAL_STORAGE_STATE_KEY = "TODO_APP_STATE";
 
-export const localStorageStateManager = {};
+export const localStorageStateManager = {value: {}};
 const initLocalStorage = () => {
   if (localStorage.getItem(LOCAL_STORAGE_VERSION_KEY) === VERSION) {
     localStorageStateManager.value =
