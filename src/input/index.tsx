@@ -1,6 +1,7 @@
 import React from 'react'
 import { todosSlice } from '../store/reducers/todos-slice'
 import { useDispatch } from 'react-redux'
+import './input.css'
 
 export const Input = () => {
     const [text, setText] = React.useState<string>('')

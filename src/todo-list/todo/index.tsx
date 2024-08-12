@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux"
 import { todosSlice } from "../../store/reducers/todos-slice"
+import './todo.css'
 
 export const Todo = ({todo}) => {
     const dispatch = useDispatch()
@@ -7,7 +8,9 @@ export const Todo = ({todo}) => {
 
     const onDelete = () => dispatch(deleteTodo(todo.id))
     return (<li>
-        <p>{todo.text}</p>
-        <p onClick={onDelete}>x</p>
+        <div>
+            <p>{todo.text}</p>
+            <p className='delete-button' onClick={onDelete}>x</p>
+        </div>
     </li>)
 }

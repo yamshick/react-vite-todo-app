@@ -1,0 +1,13 @@
+li > div{
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+}
+
+.delete-button {
+    color: red;
+}
+
+.delete-button:hover {
+    cursor: pointer;
+}
