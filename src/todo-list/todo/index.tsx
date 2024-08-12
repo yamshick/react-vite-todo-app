@@ -13,9 +13,10 @@ export const Todo = ({todo}) => {
     const onDelete = () => dispatch(deleteTodo(todo.id))
 
 return (<li>
-        <div>
+        <div className='todo'>
             <p className={todo.status === STATUSES.DONE ? 'done-todo' : ''}>{todo.text}</p>
             <div className="button-panel">
+                <p>{(new Date(todo.id)).toLocaleDateString()}</p>
                 <p className='done-button' onClick={toggleStatus}>✓</p>
                 <p className='delete-button' onClick={onDelete}>✗</p>
             </div>
