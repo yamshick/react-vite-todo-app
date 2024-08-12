@@ -1,12 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { reducer as todosReducer } from "./reducers/todos-slice";
-// import { reducer as blocksReducer } from "./reducers/blocks-slice";
-// import { reducer as modalReducer } from "./reducers/modal-slice";
-// import { reducer as headerNavReducer } from "./reducers/header-nav-slice";
+import { reducer as filtersReducer } from "./reducers/filter-slice";
 import { LOCAL_STORAGE_STATE_KEY } from "../local-storage/local-storage";
 
 const rootReducer = combineReducers({
   todosReducer,
+  filtersReducer
 });
 const localStorageMiddleware = (store) => (next) => (action) => {
   console.log(action);

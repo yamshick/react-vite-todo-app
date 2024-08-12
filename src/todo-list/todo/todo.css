@@ -4,10 +4,27 @@ li > div{
     font-size: 30px;
 }
 
+.button-panel {
+    display: flex;
+    gap: 50px;
+}
+
 .delete-button {
     color: red;
 }
 
+.done-todo {
+    text-decoration: line-through;
+}
+
+.done-button {
+    color: green;
+}
+
 .delete-button:hover {
+    cursor: pointer;
+}
+
+.done-button:hover {
     cursor: pointer;
 }

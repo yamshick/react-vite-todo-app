@@ -1,4 +1,5 @@
 import './App.css'
+import { Filters } from './filters'
 import { Input } from './input'
 import { TodoList } from './todo-list'
 
@@ -7,6 +8,7 @@ function App() {
     <>
       <h1>Todo List</h1>
       <Input />
+      <Filters />
       <TodoList />
     </>
   )
