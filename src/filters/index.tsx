@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux"
 import { FILTERS } from "../constants"
-import { selectFilter } from "../store/selectors/filters-selectors"
 import './filters.css'
 import {Filter} from './filter'
 
