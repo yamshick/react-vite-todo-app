@@ -10,14 +10,14 @@ export const Input = () => {
     const {addTodo} = todosSlice.actions
     const dispatch = useDispatch()
 
-    const onKeyDown = (event) => {
+    const onKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             dispatch(addTodo({id: Date.now(), text, status: STATUSES.TODO}))
             setText('')
         }
     }
 
-    const onChange = (event) => {
+    const onChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
         setText(event.target.value)
     }
 

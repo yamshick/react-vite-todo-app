@@ -3,6 +3,15 @@ import { todosSlice } from "../../store/reducers/todos-slice"
 import './todo.css'
 import { STATUSES } from "../../constants"
 
+const addZero = (timeItem: number) => {
+    return String(timeItem).length === 1 ? `0${timeItem}` : timeItem
+}
+
+const getDate = (dateNow: Date) => {
+    const date = new Date(dateNow)
+    return `${date.toLocaleDateString()}    ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`
+}
+
 export const Todo = ({todo}) => {
     const dispatch = useDispatch()
     const {updateTodoStatus, deleteTodo} = todosSlice.actions
@@ -16,7 +25,7 @@ return (<li>
         <div className='todo'>
             <p className={todo.status === STATUSES.DONE ? 'done-todo' : ''}>{todo.text}</p>
             <div className="button-panel">
-                <p>{(new Date(todo.id)).toLocaleDateString()}</p>
+                <p>{getDate(todo.id)}</p>
                 <p className='done-button' onClick={toggleStatus}>✓</p>
                 <p className='delete-button' onClick={onDelete}>✗</p>
             </div>
