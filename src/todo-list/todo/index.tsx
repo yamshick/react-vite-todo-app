@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { todosSlice } from "../../store/reducers/todos-slice"
+import { ITodoItem, todosSlice } from "../../store/reducers/todos-slice"
 import './todo.css'
 import { STATUSES } from "../../constants"
 
@@ -12,7 +12,7 @@ const getDate = (dateNow: Date) => {
     return `${date.toLocaleDateString()}    ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`
 }
 
-export const Todo = ({todo}) => {
+export const Todo = ({todo}: {todo: ITodoItem}) => {
     const dispatch = useDispatch()
     const {updateTodoStatus, deleteTodo} = todosSlice.actions
 

@@ -8,6 +8,7 @@ const initialState = {
 
 export const filtersSlice = createSlice({
   name: "filters",
+  //@ts-ignore   
   initialState: localStorageStateManager.value.filtersReducer || initialState,
   reducers: {
     setFilter(state, action) {
