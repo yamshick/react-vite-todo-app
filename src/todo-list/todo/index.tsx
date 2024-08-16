@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { useDispatch } from "react-redux"
 import { ITodoItem, todosSlice } from "../../store/reducers/todos-slice"
 import './todo.css'
