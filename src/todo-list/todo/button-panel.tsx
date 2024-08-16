@@ -1,5 +1,3 @@
-import React from "react"
-
 const addZero = (timeItem: number) => {
     return String(timeItem).length === 1 ? `0${timeItem}` : timeItem
 }
@@ -15,10 +13,10 @@ interface IButtonPanel {
     onDelete: () => void
 } 
 
-export const ButtonPanel = React.memo(({todoId, toggleStatus, onDelete}: IButtonPanel) => {
+export const ButtonPanel = ({todoId, toggleStatus, onDelete}: IButtonPanel) => {
     return (<div className="button-panel">
         <p>{getDate(todoId)}</p>
         <p className='done-button' onClick={toggleStatus}>✓</p>
         <p className='delete-button' onClick={onDelete}>✗</p>
     </div>)
-})
+}

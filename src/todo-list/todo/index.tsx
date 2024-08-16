@@ -9,11 +9,10 @@ export const Todo = React.memo(({todo}: {todo: ITodoItem}) => {
     const dispatch = useDispatch()
     const {updateTodoStatus, deleteTodo} = todosSlice.actions
 
-    const toggleStatus = useCallback(() => {
+    const toggleStatus = () => {
         dispatch(updateTodoStatus({id: todo.id, status: todo.status === STATUSES.DONE ? STATUSES.TODO : STATUSES.DONE}))
-    }, [dispatch, todo.id, todo.status])
-
-    const onDelete = useCallback(() => dispatch(deleteTodo(todo.id)), [dispatch, todo.id])
+    }
+    const onDelete = () => dispatch(deleteTodo(todo.id))
 
 return (<li>
         <div className='todo'>
