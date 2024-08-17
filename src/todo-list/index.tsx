@@ -1,57 +1,71 @@
+// import { selectTodos } from '../store/selectors/todos-selectors'
+import { useSelector } from 'react-redux'
+import { selectFilter } from '../store/selectors/filters-selectors'
 import update from 'immutability-helper'
+import { FILTERS } from '../constants'
 import type { FC } from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useMemo } from 'react'
 
 import { Card } from './todo'
+import './todo-list.css'
 
 const style = {
-  width: 400,
+//   width: 400,
 }
 
 export interface Item {
   id: number
-  text: string
+  text: string,
+  status: string
 }
 
 export interface ContainerState {
   cards: Item[]
 }
 
+const initialCards = [
+    {
+      id: 1,
+      text: 'Write a cool JS library',
+      status: "TODO"
+    },
+    {
+      id: 2,
+      text: 'Make it generic enough',
+      status: "TODO"
+    },
+    {
+      id: 3,
+      text: 'Write README',
+      status: "TODO"
+    },
+    {
+      id: 4,
+      text: 'Create some examples',
+      status: "TODO"
+    },
+    {
+      id: 5,
+      text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
+      status: "TODO"
+    },
+    {
+      id: 6,
+      text: '???',
+      status: "TODO"
+    },
+    {
+      id: 7,
+      text: 'PROFIT',
+      status: "TODO"
+    },
+  ]
+
 export const TodoList: FC = () => {
-  {
-    const [cards, setCards] = useState([
-      {
-        id: 1,
-        text: 'Write a cool JS library',
-      },
-      {
-        id: 2,
-        text: 'Make it generic enough',
-      },
-      {
-        id: 3,
-        text: 'Write README',
-      },
-      {
-        id: 4,
-        text: 'Create some examples',
-      },
-      {
-        id: 5,
-        text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
-      },
-      {
-        id: 6,
-        text: '???',
-      },
-      {
-        id: 7,
-        text: 'PROFIT',
-      },
-    ])
+    const [cards, setCards] = useState(initialCards)
 
     const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-      setCards((prevCards: Item[]) =>
+      setCards((prevCards: any) =>
         update(prevCards, {
           $splice: [
             [dragIndex, 1],
@@ -61,14 +75,19 @@ export const TodoList: FC = () => {
       )
     }, [])
 
+    const todoFilter = useSelector(selectFilter)
+
+    const filteredTodos = useMemo(() => cards.filter((todo: any) => todoFilter === FILTERS.ALL ? true : todo.status === todoFilter), [todoFilter, cards])
+
     const renderCard = useCallback(
-      (card: { id: number; text: string }, index: number) => {
+      (card: { id: number; text: string, status: string }, index: number) => {
         return (
           <Card
             key={card.id}
             index={index}
             id={card.id}
             text={card.text}
+            status={card.status}
             moveCard={moveCard}
           />
         )
@@ -77,11 +96,8 @@ export const TodoList: FC = () => {
     )
 
     return (
-      <>
-        <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
-      </>
+        <ul style={style}>{filteredTodos.map((card, i) => renderCard(card, i))}</ul>
     )
-  }
 }
 
 // import { useSelector } from 'react-redux'
@@ -95,9 +111,9 @@ export const TodoList: FC = () => {
 
 // export const TodoList = () => {
 //     const todos = useSelector(selectTodos)
-//     const todoFilter = useSelector(selectFilter)
+    // const todoFilter = useSelector(selectFilter)
 
-//     const filteredTodos = useMemo(() => todos.filter((todo: ITodoItem) => todoFilter === FILTERS.ALL ? true : todo.status === todoFilter), [todoFilter, todos])
+    // const filteredTodos = useMemo(() => todos.filter((todo: ITodoItem) => todoFilter === FILTERS.ALL ? true : todo.status === todoFilter), [todoFilter, todos])
 
 //     return (<ul>{filteredTodos.map((todo: ITodoItem) => <Todo key={`${todo.id}`} todo={todo} />)}</ul>)
 // } 

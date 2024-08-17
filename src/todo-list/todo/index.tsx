@@ -1,7 +1,12 @@
 import type { Identifier, XYCoord } from 'dnd-core'
+import { useDispatch } from "react-redux"
+import { todosSlice } from "../../store/reducers/todos-slice"
 import type { FC } from 'react'
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
+import { STATUSES } from "../../constants"
+import { ButtonPanel } from "./button-panel"
+import './todo.css'
 
 export const ItemTypes = {
     CARD: 'card',
@@ -19,6 +24,7 @@ export interface CardProps {
   id: any
   text: string
   index: number
+  status: string
   moveCard: (dragIndex: number, hoverIndex: number) => void
 }
 
@@ -28,7 +34,7 @@ interface DragItem {
   type: string
 }
 
-export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
+export const Card: FC<CardProps> = ({ id, status, text, index, moveCard }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -103,11 +109,27 @@ export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
 
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
-  return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      {text}
-    </div>
-  )
+//   return (
+//     <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+//       {text}
+//     </div>
+//   )
+
+    const dispatch = useDispatch()
+    const {updateTodoStatus, deleteTodo} = todosSlice.actions
+
+    const toggleStatus = () => {
+        dispatch(updateTodoStatus({id, status: status === STATUSES.DONE ? STATUSES.TODO : STATUSES.DONE}))
+    }
+    const onDelete = () => dispatch(deleteTodo(id))
+
+return (<li>
+        <div className='todo' ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+            <p className={status === STATUSES.DONE ? 'done-todo' : ''}>{text}</p>
+            <ButtonPanel todoId={id} toggleStatus={toggleStatus} onDelete={onDelete}/>
+        </div>
+    </li>)
+
 }
 
 // import React from "react"
