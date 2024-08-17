@@ -5,7 +5,7 @@ import { FILTERS } from '../constants'
 import type { FC } from 'react'
 import { useCallback, useState, useMemo, useEffect } from 'react'
 
-import { Card } from './todo'
+import { Todo } from './todo'
 import './todo-list.css'
 import { selectTodos } from '../store/selectors/todos-selectors'
 import { todosSlice } from '../store/reducers/todos-slice'
@@ -22,14 +22,14 @@ export interface ContainerState {
 }
 
 export const TodoList: FC = () => {
-    const storeCards = useSelector(selectTodos)
-    const {setTodos: storeSetCards} = todosSlice.actions
+    const storeTodos = useSelector(selectTodos)
+    const {setTodos: storeSetTodos} = todosSlice.actions
     const dispatch = useDispatch()
-    const [cards, setCards] = useState(storeCards)
+    const [todos, setTodos] = useState(storeTodos)
 
 
-    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-      setCards((prevCards: any) =>
+    const moveTodo = useCallback((dragIndex: number, hoverIndex: number) => {
+      setTodos((prevCards: Item[]) =>
         update(prevCards, {
           $splice: [
             [dragIndex, 1],
@@ -40,25 +40,24 @@ export const TodoList: FC = () => {
     }, [])
 
     useEffect(() => {
-        console.log({cards})
-        dispatch(storeSetCards(cards))
-    }, [cards])
+        dispatch(storeSetTodos(todos))
+    }, [todos])
 
-    useEffect(() => {setCards(storeCards)}, [storeCards])
+    useEffect(() => {setTodos(storeTodos)}, [storeTodos])
     const todoFilter = useSelector(selectFilter)
 
-    const filteredTodos = useMemo(() => cards.filter((todo: any) => todoFilter === FILTERS.ALL ? true : todo.status === todoFilter), [todoFilter, cards])
+    const filteredTodos = useMemo(() => todos.filter((todo: Item) => todoFilter === FILTERS.ALL ? true : todo.status === todoFilter), [todoFilter, todos])
 
-    const renderCard = useCallback(
-      (card: { id: number; text: string, status: string }, index: number) => {
+    const renderTodo = useCallback(
+      (todo: { id: number; text: string, status: string }, index: number) => {
         return (
-          <Card
-            key={card.id}
+          <Todo
+            key={todo.id}
             index={index}
-            id={card.id}
-            text={card.text}
-            status={card.status}
-            moveCard={moveCard}
+            id={todo.id}
+            text={todo.text}
+            status={todo.status}
+            moveTodo={moveTodo}
           />
         )
       },
@@ -66,6 +65,6 @@ export const TodoList: FC = () => {
     )
 
     return (
-        <ul>{filteredTodos.map((card: any, i: number) => renderCard(card, i))}</ul>
+        <ul>{filteredTodos.map((todo: Item, i: number) => renderTodo(todo, i))}</ul>
     )
 }

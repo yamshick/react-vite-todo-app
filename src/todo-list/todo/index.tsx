@@ -19,12 +19,12 @@ const style = {
   cursor: 'move',
 }
 
-export interface CardProps {
+export interface TodoProps {
   id: any
   text: string
   index: number
   status: string
-  moveCard: (dragIndex: number, hoverIndex: number) => void
+  moveTodo: (dragIndex: number, hoverIndex: number) => void
 }
 
 interface DragItem {
@@ -33,7 +33,7 @@ interface DragItem {
   type: string
 }
 
-export const Card: FC<CardProps> = ({ id, status, text, index, moveCard }) => {
+export const Todo: FC<TodoProps> = ({ id, status, text, index, moveTodo }) => {
     const filter = useSelector(selectFilter)
   const ref = useRef<HTMLDivElement>(null)
   const [{ handlerId }, drop] = useDrop<
@@ -75,7 +75,7 @@ export const Card: FC<CardProps> = ({ id, status, text, index, moveCard }) => {
         return
       }
 
-      moveCard(dragIndex, hoverIndex)
+      moveTodo(dragIndex, hoverIndex)
 
       item.index = hoverIndex
     },
