@@ -98,7 +98,7 @@ export const TodoList: FC = () => {
         dispatch(storeSetCards(cards))
     }, [cards])
 
-    // useEffect(() => {setCards(storeCards)}, [storeCards])
+    useEffect(() => {setCards(storeCards)}, [storeCards])
     const todoFilter = useSelector(selectFilter)
 
     const filteredTodos = useMemo(() => cards.filter((todo: any) => todoFilter === FILTERS.ALL ? true : todo.status === todoFilter), [todoFilter, cards])
