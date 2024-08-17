@@ -1,12 +1,13 @@
 import type { Identifier, XYCoord } from 'dnd-core'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { todosSlice } from "../../store/reducers/todos-slice"
 import type { FC } from 'react'
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import { STATUSES } from "../../constants"
+import { FILTERS, STATUSES } from "../../constants"
 import { ButtonPanel } from "./button-panel"
 import './todo.css'
+import { selectFilter } from '../../store/selectors/filters-selectors'
 
 export const ItemTypes = {
     CARD: 'card',
@@ -35,6 +36,7 @@ interface DragItem {
 }
 
 export const Card: FC<CardProps> = ({ id, status, text, index, moveCard }) => {
+    const filter = useSelector(selectFilter)
   const ref = useRef<HTMLDivElement>(null)
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -124,7 +126,7 @@ export const Card: FC<CardProps> = ({ id, status, text, index, moveCard }) => {
     const onDelete = () => dispatch(deleteTodo(id))
 
 return (<li>
-        <div className='todo' ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+        <div className='todo' ref={ref} style={filter === FILTERS.ALL ? { ...style, opacity } : {}} data-handler-id={FILTERS.ALL ? handlerId : () => {}}>
             <p className={status === STATUSES.DONE ? 'done-todo' : ''}>{text}</p>
             <ButtonPanel todoId={id} toggleStatus={toggleStatus} onDelete={onDelete}/>
         </div>
