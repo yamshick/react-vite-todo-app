@@ -1,13 +1,15 @@
 // import { selectTodos } from '../store/selectors/todos-selectors'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectFilter } from '../store/selectors/filters-selectors'
 import update from 'immutability-helper'
 import { FILTERS } from '../constants'
 import type { FC } from 'react'
-import { useCallback, useState, useMemo } from 'react'
+import { useCallback, useState, useMemo, useEffect } from 'react'
 
 import { Card } from './todo'
 import './todo-list.css'
+import { selectTodos } from '../store/selectors/todos-selectors'
+import { todosSlice } from '../store/reducers/todos-slice'
 
 const style = {
 //   width: 400,
@@ -62,9 +64,25 @@ const initialCards = [
   ]
 
 export const TodoList: FC = () => {
-    const [cards, setCards] = useState(initialCards)
+    const storeCards = useSelector(selectTodos)
+    const {setTodos: storeSetCards} = todosSlice.actions
+    const dispatch = useDispatch()
+    const [cards, setCards] = useState(storeCards)
+
+    console.log({storeCards})
 
     const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
+        console.log({storeCards})
+        // dispatch(storeSetCards(storeCards))
+        // dispatch(storeSetCards([...storeCards.reverse()]))
+        // dispatch(storeSetCards(
+        //     update(storeCards, {
+        //     $splice: [
+        //         [dragIndex, 1],
+        //         [hoverIndex, 0, storeCards[dragIndex] as Item],
+        //     ],
+        //     }),
+        // ))
       setCards((prevCards: any) =>
         update(prevCards, {
           $splice: [
@@ -75,6 +93,12 @@ export const TodoList: FC = () => {
       )
     }, [])
 
+    useEffect(() => {
+        console.log({cards})
+        dispatch(storeSetCards(cards))
+    }, [cards])
+
+    // useEffect(() => {setCards(storeCards)}, [storeCards])
     const todoFilter = useSelector(selectFilter)
 
     const filteredTodos = useMemo(() => cards.filter((todo: any) => todoFilter === FILTERS.ALL ? true : todo.status === todoFilter), [todoFilter, cards])
