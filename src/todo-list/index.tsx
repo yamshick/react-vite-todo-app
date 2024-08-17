@@ -120,7 +120,7 @@ export const TodoList: FC = () => {
     )
 
     return (
-        <ul style={style}>{filteredTodos.map((card, i) => renderCard(card, i))}</ul>
+        <ul style={style}>{filteredTodos.map((card: any, i: number) => renderCard(card, i))}</ul>
     )
 }
 
