@@ -2,9 +2,9 @@ const addZero = (timeItem: number) => {
     return String(timeItem).length === 1 ? `0${timeItem}` : timeItem
 }
 
-const getDate = (dateNow: Date) => {
-    const date = new Date(dateNow)
-    return `${date.toLocaleDateString()}    ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`
+export const getDate = (dateNow?: Date) => {
+    const date = new Date(dateNow || Date.now())
+    return `${date.toLocaleDateString()} ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`
 }
 
 interface IButtonPanel {

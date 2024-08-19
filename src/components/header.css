@@ -1,0 +1,17 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header {
+    padding-left: 35%;
+    display: flex;
+}
+
+.date {
+    display: flex;
+    border: solid 1px;
+    border-radius: 10px;
+    padding: 5px;
+}

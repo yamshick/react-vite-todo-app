@@ -20,7 +20,7 @@ export const todosSlice = createSlice({
       state.todos = action.payload;
     },
     addTodo(state, action) {
-        state.todos = [...state.todos, action.payload]
+        state.todos = [action.payload, ...state.todos]
     },
     deleteTodo(state, action) {
         state.todos = state.todos.filter((todo: ITodoItem) => todo.id !== action.payload)
